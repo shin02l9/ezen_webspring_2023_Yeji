@@ -20,6 +20,11 @@ public class ServletController extends HttpServlet {
         resp.getWriter().println("정상응답");
     }
 
+
+
+
+
+    
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // 1. 요청
