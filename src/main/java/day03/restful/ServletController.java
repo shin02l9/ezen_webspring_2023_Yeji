@@ -24,7 +24,7 @@ public class ServletController extends HttpServlet {
 
 
 
-    
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // 1. 요청
