@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- CSS와 JS는 static 폴더에서부터 경로 시작 -->
+    <link href="/todo.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="todowrap"> <!-- 전체구역 -->
+
+         <h1> 나만의 할일 목록 </h1>
+        <div class="todo_top"> <!-- 쓰기구역 -->
+            <input type="text"/>
+            <button type="button"> 등록 </button>
+        </div>
+
+
+        <div class="todo_bottom"> <!-- 출력구역 -->
+            <div class="todo">
+                <div class="tcontent"> 리액트배우기 </div>
+                <div class="etcbtns">
+                    <button type="button"> 상태변경 </button>
+                    <button type="button"> 제거하기 </button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+<script src="/todo.js"> </script>
+</body>
+</html>
