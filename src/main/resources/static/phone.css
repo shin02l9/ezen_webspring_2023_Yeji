@@ -1,0 +1,18 @@
+
+.phoneh{ padding-top: 50px; }
+
+.inputp{
+    border: 0.5px solid #eeeeee;
+    width: 250px;
+    height: 30px;
+    margin-bottom: 10px;
+}
+
+.btn{
+    margin-top: 20px;
+    width: 250px; height: 30px;
+}
+
+.phonePrint{
+    margin-top: 50px;
+}

@@ -28,8 +28,7 @@ public class PhoneService {
                 .build();
         // 2.  JpaRepository 를 이용한 엔티티 저장 [ insert 대체 ]
         phoneEntityRepository.save( phoneEntity );
-
-        return false;
+        return true;
     }
 
 
@@ -67,8 +66,7 @@ public class PhoneService {
             updateEntity.setPname( phoneDto.getPname() );
             updateEntity.setPphone( phoneDto.getPphone() );
         }
-
-        return false;
+        return true;
     }
 
 
@@ -76,8 +74,7 @@ public class PhoneService {
 
         // 1. 삭제할 식별키를 가지고 해당 엔티티 삭제 [ delete 대체 ]
         phoneEntityRepository.deleteById( pno );
-
-        return false;
+        return true;
     }
 
 }
