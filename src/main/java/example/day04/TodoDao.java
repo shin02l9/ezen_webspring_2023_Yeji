@@ -2,6 +2,7 @@ package example.day04;
 
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +70,7 @@ public class TodoDao {
         return list;
     }
     // 3. [U]
+    @Transactional
     public boolean doPut(TodoDto todoDto){     // 요청 매개변수 : 수정 필요한 정보들 [ Dto ]
         System.out.println("TodoDao.doPut");
 
