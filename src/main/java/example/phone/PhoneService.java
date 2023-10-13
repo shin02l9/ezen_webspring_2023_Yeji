@@ -65,8 +65,9 @@ public class PhoneService {
             // 4. 엔티티 찾았으니 필드 수정
             updateEntity.setPname( phoneDto.getPname() );
             updateEntity.setPphone( phoneDto.getPphone() );
+            return true;
         }
-        return true;
+        return false;
     }
 
 
