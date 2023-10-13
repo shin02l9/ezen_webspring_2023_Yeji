@@ -20,8 +20,7 @@ public class NoteController {
     // 1. [C]
     @PostMapping("/do")
     public boolean bWrite(@RequestBody NoteDto noteDto) {
-        boolean result = noteService.bWrite(noteDto);
-        return result;
+        return noteService.bWrite(noteDto);
     }
     // 2. [R]
     @GetMapping("/do")

@@ -19,7 +19,6 @@ public class TodoController {
     @GetMapping("/index")
     public Resource getIndex(){
         return new ClassPathResource("templates/todo.html");
-
     }
 
     @PostMapping("")

@@ -17,6 +17,14 @@ public class NoteDto {
     private String password; // 비밀번호
     private LocalDateTime date; // 작성일
 
-
+    // dto -> entity 변경
+    public NoteEntity toEntity() {
+        return NoteEntity.builder()
+                .date( this.date )
+                .title( this.title )
+                .writer( this.writer )
+                .password( this.password )
+                .build();
+    }
 
 }
