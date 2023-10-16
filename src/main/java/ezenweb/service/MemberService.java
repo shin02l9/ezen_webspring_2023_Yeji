@@ -6,9 +6,7 @@ import ezenweb.model.entity.MemberEntity;
 import ezenweb.model.repository.MemberEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 
 import javax.transaction.Transactional;
 import java.util.List;
