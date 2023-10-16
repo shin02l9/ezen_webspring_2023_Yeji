@@ -31,6 +31,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="d206cc26-02d1-4208-902d-c9680fde9d8b">
+      <console name="Connection" type="STANDARD" schema="" session="Main" />
       <console name="SpringDB" type="STANDARD" schema="springweb" session="Main"><![CDATA[use springweb;
 drop table todo;
 create table todo (
@@ -51,8 +52,19 @@ commit;]]></console>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
   </component>
+  <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="d206cc26-02d1-4208-902d-c9680fde9d8b" dataset="springweb.member" active-filter-id="" />
+  </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
+  </component>
+  <component name="DBNavigator.Project.MethodExecutionManager">
+    <method-browser />
+    <execution-history>
+      <group-entries value="true" />
+      <execution-inputs />
+    </execution-history>
+    <argument-values-cache />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
@@ -73,12 +85,12 @@ commit;]]></console>
           <url-type value="DATABASE" />
           <host value="localhost" />
           <port value="3306" />
-          <database value="mysql" />
+          <database value="springweb" />
           <tns-folder value="" />
           <tns-profile value="" />
           <type value="USER_PASSWORD" />
           <user value="root" />
-          <deprecated-pwd value="MDAwMA==" />
+          <deprecated-pwd value="MTIzNA==" />
         </database>
         <properties>
           <auto-commit value="false" />
@@ -122,7 +134,7 @@ commit;]]></console>
           <tcp-port-from value="4000" />
           <tcp-port-to value="4999" />
         </debugger>
-        <object-filters hide-empty-schemas="false" hide-pseudo-columns="false">
+        <object-filters hide-empty-schemas="true" hide-pseudo-columns="false">
           <object-type-filter>
             <object-type name="SCHEMA" enabled="true" />
             <object-type name="USER" enabled="true" />
