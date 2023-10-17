@@ -16,6 +16,7 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
+    // ---------------------------------------------------------------------------------
 
     // 1. [C] 회원 가입
     @PostMapping("/do")
@@ -24,11 +25,17 @@ public class MemberController {
         return result;
     }
 
-    // 2. [R] 회원정보 호출 (1명의 회원정보)
+    /*// 2. [R] 회원정보 호출 (1명의 회원정보) -> 세션을 구현 안했을 때
     @GetMapping("/do")
     public MemberDto getMember( @RequestParam int mno ) {
         MemberDto memberDto = memberService.getMember(mno);
         return memberDto;
+    }*/
+
+    // 2. [R] 회원정보 호출 (1명의 회원정보) -> 세션 구현 후 로그인된 회원정보 호출하기
+    @GetMapping("/do")
+    public MemberDto getMember( ) {
+        return memberService.getMember();
     }
 
     // 3. [U] 회원정보 수정
@@ -45,7 +52,7 @@ public class MemberController {
         return result;
     }
 
-
+    // ---------------------------------------------------------------------------------
 
     // 5. 아이디 찾기 ( 이름이랑 휴대폰 번호로 찾기 )
     @GetMapping("/findid")
@@ -53,6 +60,7 @@ public class MemberController {
         String memail = memberService.findMemberId( mname, mphone );
         return memail;
     }
+
     // 6. 비밀번호 찾기
     @GetMapping("/findpw")
     public String findMemberPw( @RequestParam String memail, @RequestParam String mphone ){
@@ -64,14 +72,9 @@ public class MemberController {
     @PostMapping("/login")
     public boolean login(@RequestBody MemberDto memberDto , HttpSession httpSession){
 
-        MemberDto loginDto = MemberDto.builder()
-                .memail( memberDto.getMemail())
-                .mpassword( memberDto.getMpassword() )
-                .build();
-
         if(memberService.login( memberDto )) {
             System.out.println("로그인 성공");
-            httpSession.setAttribute("loginId", loginDto );
+            httpSession.setAttribute("loginId", memberDto );
             return true;
         }
         else {
@@ -90,6 +93,21 @@ public class MemberController {
         } else { return false; }
     }
 
+    // 강사님이 하신 방법 (로그인, 로그아웃) ======================================
+
+    // 로그인 [post]
+    @PostMapping("/loginT")
+    public boolean loginT(@RequestBody MemberDto memberDto){
+        boolean result = memberService.loginT( memberDto );
+        return result;
+    }
+
+    // 로그아웃 [get]
+    @GetMapping("/logoutT")
+    public boolean logoutT( ){
+        boolean result = memberService.logoutT( );
+        return result;
+    }
 
 
 }
