@@ -31,7 +31,7 @@ public class MemberService {
         // 1. dto -> entity 변경후 repository를 통해 insert 후 결과를 entity로 받기
         MemberEntity memberEntity = memberRepository.save( memberDto.toMemberEntity() );
         // 2. insert 된 엔티티 확인 후 성공/실패 유무 확인하기
-            // 회원번호가 0보다 크면 auto-increment 적용 된거임 !
+            // 회원번호가 0보다 크면 c
         if( memberEntity.getMno() >= 1 ) { return true; }
         return false;
     }

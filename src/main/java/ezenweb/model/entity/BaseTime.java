@@ -11,7 +11,7 @@ import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
 // ┌> 공통된 어노테이션 정보 등을 부모 클래스로 선언하고 어노테이션 정보를 자식 클래스에게 제공할떄 사용함
-@MappedSuperclass // 엔티티가 아님.. 여러 엔티티가 사용하는 필드에 대해 구성할때
+@MappedSuperclass // 엔티티가 아님.. 여러 엔티티가 사용하는 필드에 대해 구성할때 | @CreatedDate, @LastModifiedDate 이 어노테이션들까지 자동으로 상속되지 않음 그래서 그걸 하려고 적은 어노테이션이다.
 @EntityListeners( AuditingEntityListener.class) // JPA Auditing 이벤트 발생할때 감지 하겠다는 선언
 @Getter @Setter
 public class BaseTime {

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
+// IOC : 제어역전 ( 객체 관리를 스프링에게 위힘 = 왜?? 개발자가  쳔할려고! 협업할려고 ! 객체공유해서 쓸려고 !
+// OC : 의존성 주입  ( 스프링이 객체를 관리하니까 )
 @RestController
 @RequestMapping("/member")
 public class MemberController {
