@@ -11,6 +11,9 @@ import 컴포넌트2 from './component/example/day01/2_컴포넌트.jsx';
 import 컴포넌트3 from './component/example/day01/3_컴포넌트.jsx';
 import 컴포넌트4 from './component/example/day01/4_컴포넌트.jsx';
 import 과제day01 from './component/example/day01/과제1_도서목록.jsx';
+import Css컴포넌트 from './component/example/day02/1_CSS적용컴포넌트.js';
+import CommentList from './component/example/day02/CommentList.js';
+import TodoList from './component/example/day02/과제1_할일목록/TodoList.js';
 
 // 1. index.html 에 <div> DOM객체 호출
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -20,7 +23,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 //root.render(<React.StrictMode><컴포넌트2 /> </React.StrictMode>)
 //root.render(<React.StrictMode><컴포넌트3 /> </React.StrictMode>)
 //root.render(<React.StrictMode><컴포넌트4 /> </React.StrictMode>)
-root.render(<React.StrictMode><과제day01 /> </React.StrictMode>)
+//root.render(<React.StrictMode><과제day01 /> </React.StrictMode>)
+//root.render(<React.StrictMode><Css컴포넌트 /> </React.StrictMode>);
+//root.render(<React.StrictMode><CommentList /> </React.StrictMode>);
+root.render(<React.StrictMode><TodoList /> </React.StrictMode>);
 
 
 

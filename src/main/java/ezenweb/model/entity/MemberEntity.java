@@ -6,6 +6,8 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity // 해당클래스를 db테이블과 매핑
 @Table(name = "member") // 테이블면 정의 가능 생략시는 해당 클래스명이 곧 db테이블명으로 자동 생성된다.
@@ -15,7 +17,6 @@ public class MemberEntity extends BaseTime{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto-increment 로 사용한단 뜻
     private int mno;            // 1. 회원번호
-
 
     // 해당 필드 선정 | name="필드명" | length = 글자수 |nullable = false -> Not null 이라는 뜻 | unique = true -> 중복제거
     @Column(name = "memail", length = 50, nullable = false, unique = true)
@@ -34,8 +35,10 @@ public class MemberEntity extends BaseTime{
     @ColumnDefault("'user'") // 초기값 설정하기 @ColumnDefault("초기값") -> 문자이면 작은따옴표도 넣어야함.
     private String mrole;       // 6. 회원등급 ( 일반회원과 관리자회원 구분하기 )
 
-
-
+    // 양방향을 위해 추가 (PK)
+    @Builder.Default // 빌더 패턴 사용시 해당 필드 값을 기본값으로 사용.
+    @OneToMany( mappedBy = "memberEntity")
+    private List<BoardEntity> boardEntitiyList = new ArrayList<>();
 
 
     // entity -> dto 함수 필요

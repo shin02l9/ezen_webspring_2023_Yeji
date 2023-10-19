@@ -38,8 +38,16 @@ public class BoardEntity extends BaseTime{
     @Column(name = "bfile",  nullable = true)
     private String bfile;
 
-    @Column(name = "mno")
-    private int mno;
+    /*@Column(name = "mno")
+    private int mno;*/
+
+
+    // 양방향을 위해 추가 (FK)
+    @ToString.Exclude // ToString 함수에서 제외.
+    @JoinColumn(name = "mno_fk") //FK 키로 사용
+    @ManyToOne
+    private MemberEntity memberEntity;
+
 
 
     // Entity -> Dto [ 사용 하는 상황 : 엔티티를 저장할 때 ]
@@ -53,7 +61,7 @@ public class BoardEntity extends BaseTime{
                 .bfile( this.bfile )
                 .cdate( this.cdate )
                 .udate( this.udate )
-                .mno( this.mno )
+                .mno( this.memberEntity.getMno() )
                 .build();
     };
     // 2. 개별 출력할 때
@@ -66,7 +74,7 @@ public class BoardEntity extends BaseTime{
                 .bfile( this.bfile )
                 .cdate( this.cdate )
                 .udate( this.udate )
-                .mno( this.mno )
+                .mno( this.memberEntity.getMno() )
                 .build();
     };
 
@@ -81,7 +89,7 @@ public class BoardEntity extends BaseTime{
                 .bfile( this.bfile )
                 .cdate( this.getCdate() )
                 .udate( this.getUdate() )
-                .mno( this.mno )
+                .mno( this.memberEntity.getMno() )
                 .build();
     };
 
