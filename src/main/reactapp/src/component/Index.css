@@ -1,0 +1,67 @@
+/* ------------------ 공통부분 ------------------ */
+li{list-style-type: none;}
+a{color: black; text-decoration: none;}
+a:hover{font-weight: bold;}
+
+/* ------------------ 헤더부분 ------------------ */
+.reactUL {
+    display: flex;
+    justify-content: space-evenly;
+}
+.reactUL li{
+    padding-right: 20px;
+}
+.headerBox{
+    width : 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+.headerBox h2{
+    font-size: 33px;
+    padding: 40px 0px;
+}
+.with{
+    font-size: 18px;
+    color: gray;
+}
+/* ------------------ 메인부분 ------------------ */
+.mainBox{
+    width : 1200px;
+    height : 300px; /* 잠깐 넣었음 */
+    vertical-align: middle;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.RoutesBox{
+    width : 100%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 50px 0px;
+}
+/* ------------------ 푸터부분 ------------------ */
+.footerAll{
+    background-color: #eeeeee;
+    padding: 20px 0px;
+}
+.footerBox{
+    width : 1100px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.footerBoxTop{
+    display: flex;
+    justify-content: flex-end;
+}
+.footerBoxTop a{
+    padding: 5px 15px;
+}
+
+.footerBoxBottom{
+    display: flex;
+    justify-content: flex-end;
+}
+.footerBoxBottom div{
+    padding: 0px 5px;
+}

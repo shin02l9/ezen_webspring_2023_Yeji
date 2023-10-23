@@ -1,6 +1,7 @@
 // ! 다른 컴포넌트 호출하기
 //  import 컴포넌트명 from './파일경로';
 import Comment from './Comment.js';
+
 export default function CommentList(props){
     // 예시 : AJAX가 응답한 데이터
     let response = [
