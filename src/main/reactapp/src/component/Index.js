@@ -23,6 +23,7 @@ import 과제day01 from './example/day01/과제1_도서목록.jsx';
 import TodoList from './example/day02/과제1_할일목록/TodoList.js';
 import Login from './member/Login.js';
 import Signup from './member/Signup.js';
+import Axios컴포넌트 from './example/day04/1_Axlos컴포넌트.js';
 
 
 
@@ -45,6 +46,7 @@ export default function Index( props ){
                     <Route path="/example/day02/CommentList" element = { <CommentList />} />
                     <Route path="/example/day01/TodoList" element = { <과제day01 />} />
                     <Route path="/example/day02/과제1_할일목록/TodoList" element = { <TodoList />} />
+                    <Route path="/example/day04/Axlos컴포넌트" element = { <Axios컴포넌트 />} />
                 { /* 회원 */ }
                 <Route path="/login" element = { <Login />} />
                 <Route path="/signup" element = { <Signup />} />

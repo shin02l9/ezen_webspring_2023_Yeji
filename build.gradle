@@ -30,3 +30,53 @@ dependencies { // 외부 라이브러리를 다운로드 받고 프로젝트에 
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+// ------------------ React 통합 ------------------------
+// * 터미널에서 리액트를 실행하지 않고 gradle이 리액트를 빌드해서 빌드된 파일을 스프링쪽으로 이동
+// 1. 리액트 코드 파일이 있는 이랙트 프로젝트 폴더 경로
+def frontendDir = "$projectDir/src/main/reactapp"//$projectDir/src/main/리액트폴더명
+    // projectDir : gradle 프로젝트의 위치
+// 2. 리액트 코드파일을 빌드해서 빌드된 파일을 어디로 이동할지.. 정의
+sourceSets {
+    main {
+        resources { srcDirs = ["$projectDir/src/main/resources"]
+        }
+    }
+}
+
+// 3. 이동할 때 원본을 이동하는 것이 아니라 카피되어 이동된다.
+processResources { dependsOn "copyReactBuildFiles" }
+
+// 4. 이제 해야할일
+    // 4-1. 리액트 설치하기 [리액트 라이브러리가 없으면 npm update 자동으로 해줌]
+task installReact(type: Exec) {
+    workingDir "$frontendDir"
+    inputs.dir "$frontendDir"
+    group = BasePlugin.BUILD_GROUP
+    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+        commandLine "npm.cmd", "audit", "fix"
+        commandLine 'npm.cmd', 'install' }
+    else {
+        commandLine "npm", "audit", "fix" commandLine 'npm', 'install'
+    }
+}
+
+// 4-2. 리액트 빌드
+task buildReact(type: Exec) {
+    dependsOn "installReact"
+    workingDir "$frontendDir"
+    inputs.dir "$frontendDir"
+    group = BasePlugin.BUILD_GROUP
+    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+        commandLine "npm.cmd", "run-script", "build"
+    } else {
+        commandLine "npm", "run-script", "build"
+    }
+}
+
+    // 4-3. 리액트 빌드파일 복사
+task copyReactBuildFiles(type: Copy) {
+    dependsOn "buildReact"
+    from "$frontendDir/build"
+    into "$projectDir/src/main/resources/static"
+}

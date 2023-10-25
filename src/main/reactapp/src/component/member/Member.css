@@ -1,0 +1,51 @@
+
+.joinTitle{
+    font-size: 30px;
+}
+
+.info h4, .info h4{
+    margin-bottom: 5px;
+    margin-left: 10px;
+}
+.info{
+    width: 60%;
+    margin: 0 auto;
+    text-align: start;
+}
+
+.loginBox, .signupBox{
+    width: 600px; min-height: 300px;
+    margin: 50px auto;
+    padding: 20px 20px;
+    border : none;
+    background-color: #EEEEEE;
+    border-radius : 10px;
+    vertical-align: middle;
+}
+
+.loginbtn, .signupbtn{
+    border : 3px solid gray;
+    border-radius : 10px;
+    font-size : 20px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 5px 5px;
+    margin: 20px 0px;
+}
+
+.loginbtn:hover, .signupbtn:hover{
+    background-color: #D1D1D1;
+}
+
+.loginBox input, .signupBox input{
+    border : 0.2px solid gray;
+    border-radius : 10px;
+    font-size : 18px;
+    width: 100%; height: 40px;
+}
+
+.findbtn{
+    border:none;
+    background-color: transparent;
+    padding-top: 20px;
+}

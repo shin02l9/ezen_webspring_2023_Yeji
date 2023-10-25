@@ -14,6 +14,7 @@ export default function ExampleList ( props ){
             <Link to='/example/day02/CommentList' > CommentList 예제 </Link>
             <Link to='/example/day01/TodoList' > 리액트과제01 </Link>
             <Link to='/example/day02/과제1_할일목록/TodoList' > 리액트과제02 </Link>
+            <Link to='/example/day04/Axlos컴포넌트' > Axios컴포넌트 </Link>
         </div>
     </>)
 }
