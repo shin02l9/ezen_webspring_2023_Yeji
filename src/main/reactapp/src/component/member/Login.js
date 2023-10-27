@@ -16,7 +16,8 @@ export default function Login( props ){
                 }
                 console.log(info);
              // 4. !! AXIOS 통신 [ Spring Controller 매핑 확인]
-                axios
+
+               axios
                     .post('/member/login', info)
                         .then( r=>{
                             if(r.data==true){

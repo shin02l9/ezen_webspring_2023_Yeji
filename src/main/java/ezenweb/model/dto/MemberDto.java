@@ -16,6 +16,8 @@ public class MemberDto {
     private String mphone;      // 5. 전화번호
     private String mrole;       // 6. 회원등급 ( 일반회원과 관리자회원 구분하기 )
 
+    private String mpasswordnew;
+
     private LocalDateTime cdate;
     private LocalDateTime udate;
 

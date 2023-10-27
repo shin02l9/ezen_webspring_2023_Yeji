@@ -23,7 +23,7 @@
     vertical-align: middle;
 }
 
-.loginbtn, .signupbtn{
+.loginbtn, .signupbtn, .updatebtn, .deletebtn{
     border : 3px solid gray;
     border-radius : 10px;
     font-size : 20px;
@@ -33,7 +33,8 @@
     margin: 20px 0px;
 }
 
-.loginbtn:hover, .signupbtn:hover{
+.loginbtn:hover, .signupbtn:hover,
+.updatebtn:hover, .deletebtn:hover{
     background-color: #D1D1D1;
 }
 

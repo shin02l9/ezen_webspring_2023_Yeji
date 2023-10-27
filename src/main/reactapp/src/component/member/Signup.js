@@ -47,8 +47,8 @@ export default function Signup( props ){
 
                 axios.get('/member/checkEmail', { params : { 'memail' : memailInput }})
                     .then( r => {
-                        if(r.data){setMemailCheck('사용중인아이디입니다.')} //중복입니다...
-                        else{setMemailCheck('사용가능한아이디입니다.')} //중복 아닙니다..
+                        if(r.data){setMemailCheck('사용중인아이디입니다.')} // 중복 입니다...
+                        else{setMemailCheck('사용가능한아이디입니다.')} // 중복 아닙니다..
                     })
             }
 

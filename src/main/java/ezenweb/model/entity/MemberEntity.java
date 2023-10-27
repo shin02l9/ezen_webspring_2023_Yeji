@@ -35,6 +35,8 @@ public class MemberEntity extends BaseTime{
     @ColumnDefault("'user'") // 초기값 설정하기 @ColumnDefault("초기값") -> 문자이면 작은따옴표도 넣어야함.
     private String mrole;       // 6. 회원등급 ( 일반회원과 관리자회원 구분하기 )
 
+    private String mpasswordnew;
+
     // 양방향을 위해 추가 (PK)
     @Builder.Default // 빌더 패턴 사용시 해당 필드 값을 기본값으로 사용.
     @OneToMany( mappedBy = "memberEntity")

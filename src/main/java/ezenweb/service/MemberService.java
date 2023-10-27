@@ -67,15 +67,26 @@ public class MemberService {
         System.out.println("memberDto = " + memberDto);
         // 1. 수정할 엔티티 찾기
         Optional<MemberEntity> entity = memberRepository.findById( memberDto.getMno() );
+
         // 2. 찾은 값이 존재 한다면
         if( entity.isPresent() ) {
             // 3. 가져오기
             MemberEntity memberEntity = entity.get();
-            // 4. 수정하기
-            memberEntity.setMname( memberDto.getMname() );
-            memberEntity.setMpassword( memberDto.getMpassword() );
-            memberEntity.setMphone( memberDto.getMphone() );
-            return true;
+            // 기존비밀번호 동일한지 확인
+            System.out.println(" 기존 비밀번호 확인 ");
+            String passwqrd1 = memberDto.getMpassword();
+            String passwqrd2 = entity.get().toMemberDto().getMpassword();
+
+            if( passwqrd1.equals(passwqrd2) ){
+                // 4. 수정하기
+                memberEntity.setMname( memberDto.getMname() );
+                memberEntity.setMpassword( memberDto.getMpasswordnew() );
+                memberEntity.setMphone( memberDto.getMphone() );
+
+                return true;
+            } else {
+                System.out.println(" 기존 비밀번호 불일치 ");
+            }
         }
         return false;
     }
@@ -87,6 +98,7 @@ public class MemberService {
 
         if ( memberRepository.existsById(mno) ) {
             memberRepository.deleteById(mno);
+            logoutT();
             return true; // 삭제 성공
         } else {
             return false; // 삭제 실패 (해당 ID가 존재하지 않음)
@@ -174,19 +186,19 @@ public class MemberService {
         return true;
     }
 
-    // 2. [R] 회원정보 호출 -> 세션 구현 후 로그인된 회원정보 호출하기
+    // 2. [R] 회원정보 호출 -> 세션 구현 후 로그인 된 회원정보 호출하기
     @Transactional
     public MemberDto getMember( ) {
         System.out.println(" 회원정보 호출 service 입장");
         // 1. 세션 호출
         Object session = Request.getSession().getAttribute("loginId");
+
         // 2. 세션 검증
         if( session != null ) {
-            System.out.println((MemberDto)session);
-            return (MemberDto)session;
+            Optional<MemberEntity> entity = memberRepository.findByMemail( ((MemberDto)session).getMemail() );
+            System.out.println(entity.get().toMemberDto());
+            return entity.get().toMemberDto();
         }
         return null;
     }
-
-
 }
