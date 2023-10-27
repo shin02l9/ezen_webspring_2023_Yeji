@@ -36,6 +36,13 @@ public class MemberService {
         return false;
     }
 
+    // 1-2. 이메일 중복검사
+    @Transactional
+    public boolean checkEmail(String memail){
+
+        return memberRepository.existsByMemail(memail);
+    }
+
     /*// 2. [R] 회원정보 호출 -> 세션을 구현 안했을 때 ( 하단에 2번 함수 새로 정의한 것 있음 )
     @Transactional
     public MemberDto getMember(int mno) {
@@ -170,10 +177,12 @@ public class MemberService {
     // 2. [R] 회원정보 호출 -> 세션 구현 후 로그인된 회원정보 호출하기
     @Transactional
     public MemberDto getMember( ) {
+        System.out.println(" 회원정보 호출 service 입장");
         // 1. 세션 호출
         Object session = Request.getSession().getAttribute("loginId");
         // 2. 세션 검증
-        if( session == null ) {
+        if( session != null ) {
+            System.out.println((MemberDto)session);
             return (MemberDto)session;
         }
         return null;

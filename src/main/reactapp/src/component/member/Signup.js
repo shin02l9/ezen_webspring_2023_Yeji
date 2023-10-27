@@ -1,6 +1,7 @@
 import style from './Member.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { useState, useEffect } from 'react';
 
 export default function Signup( props ){
 
@@ -8,7 +9,7 @@ export default function Signup( props ){
     function onSignup(e){
         console.log(e);
         // 2. axios를 이용한 restApi 로 spring Controller 데이터 전달
-            // 3. 데이터 구성
+            // 3. 데이터 구성 // 기존방법
             let info = {
                 memail : document.querySelector('.memail').value,
                 mpassword : document.querySelector('.mpassword').value,
@@ -17,6 +18,7 @@ export default function Signup( props ){
             };
             console.log(info);
             console.log(info.mpassword);
+
 
             // 비밀번호 확인
             let mpasswordCom = document.querySelector('.mpasswordCom').value;
@@ -37,6 +39,20 @@ export default function Signup( props ){
             } else{alert('비밀번호가 일치하지 않습니다.');}
     }
 
+            let [ memail ,setMemail] = useState('')
+            let [ memailCheck ,setMemailCheck] = useState('')
+            const memailInputchange = (e) => {
+
+                let memailInput = e.target.value;
+
+                axios.get('/member/checkEmail', { params : { 'memail' : memailInput }})
+                    .then( r => {
+                        if(r.data){setMemailCheck('사용중인아이디입니다.')} //중복입니다...
+                        else{setMemailCheck('사용가능한아이디입니다.')} //중복 아닙니다..
+                    })
+            }
+
+
 
 
     return(<>
@@ -44,7 +60,10 @@ export default function Signup( props ){
         <h3 className="joinTitle">Signup</h3>
         <form className="info">
             <h4> 이메일[아이디] </h4>
-            <input className="memail" type="text" /> <br/>
+            <input className="memail" type="text" placeholder="@포함 7~30글자"
+                onChange = { memailInputchange }
+            /> <br/>
+            <div> { memailCheck } </div>
             <h4> 비밀번호 </h4>
             <input className="mpassword" type="password" /> <br/>
             <h4>  비밀번호확인 </h4>

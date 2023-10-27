@@ -23,8 +23,16 @@ public class MemberController {
     // 1. [C] 회원 가입
     @PostMapping("/do")
     public boolean postMember( @RequestBody MemberDto memberDto ) {
+
         boolean result = memberService.postMember(memberDto);
         return result;
+    }
+
+    // 1-2. 이메일 중복검사
+    @GetMapping("/checkEmail")
+    public boolean checkEmail( @RequestParam String memail){
+
+        return memberService.checkEmail(memail);
     }
 
     /*// 2. [R] 회원정보 호출 (1명의 회원정보) -> 세션을 구현 안했을 때
@@ -37,6 +45,7 @@ public class MemberController {
     // 2. [R] 회원정보 호출 (1명의 회원정보) -> 세션 구현 후 로그인된 회원정보 호출하기
     @GetMapping("/do")
     public MemberDto getMember( ) {
+        System.out.println(" 회원정보 호출 controller 입장");
         return memberService.getMember();
     }
 

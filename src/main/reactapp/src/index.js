@@ -16,6 +16,8 @@ import CommentList from './component/example/day02/CommentList.js';
 import TodoList from './component/example/day02/과제1_할일목록/TodoList.js';
 import 라우터컴포넌트 from './component/example/day03/1_라우터컴포넌트.js';
 import Index from './component/Index.js';
+import 상태관리컴포넌트 from './component/example/day05/1_상태관리컴포넌트.js';
+import 생명주기컴포넌트 from './component/example/day05/2_생명주기컴포넌트.js';
 
 // 1. index.html 에 <div> DOM객체 호출
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -31,6 +33,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 //root.render(<React.StrictMode><TodoList /> </React.StrictMode>);
 //root.render(<React.StrictMode><라우터컴포넌트 /> </React.StrictMode>);
 root.render(<> <Index /> </>);
+//root.render(<> <상태관리컴포넌트 /> </>);
+//root.render(<> <생명주기컴포넌트 /> </>);
 
 
 

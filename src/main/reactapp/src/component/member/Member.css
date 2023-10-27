@@ -49,3 +49,6 @@
     background-color: transparent;
     padding-top: 20px;
 }
+
+.logoutbtn{ cursor: pointer; }
+.logoutbtn:hover{ font-weight: bold; }
