@@ -53,3 +53,7 @@
 
 .logoutbtn{ cursor: pointer; }
 .logoutbtn:hover{ font-weight: bold; }
+
+.btnBoxforlogin{
+    text-align: center;
+}

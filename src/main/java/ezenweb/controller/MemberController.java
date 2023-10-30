@@ -79,46 +79,46 @@ public class MemberController {
         return mpassword;
     }
 
-    // 7. 로그인
-    @PostMapping("/login")
-    public boolean login(@RequestBody MemberDto memberDto , HttpSession httpSession){
-
-        if(memberService.login( memberDto )) {
-            System.out.println("로그인 성공");
-            httpSession.setAttribute("loginId", memberDto );
-            return true;
-        }
-        else {
-            System.out.println("로그인 실패");
-            return false;
-        }
-    }
-
-    // 8. 로그아웃
-    @GetMapping("/logout")
-    public boolean logout( HttpSession httpSession){
-
-        if( httpSession.getAttribute("loginId")!= null ){
-            httpSession.removeAttribute("loginId");
-            return true;
-        } else { return false; }
-    }
+//    // 7. 로그인
+//    @PostMapping("/login")
+//    public boolean login(@RequestBody MemberDto memberDto , HttpSession httpSession){
+//
+//        if(memberService.login( memberDto )) {
+//            System.out.println("로그인 성공");
+//            httpSession.setAttribute("loginId", memberDto );
+//            return true;
+//        }
+//        else {
+//            System.out.println("로그인 실패");
+//            return false;
+//        }
+//    }
+//
+//    // 8. 로그아웃
+//    @GetMapping("/logout")
+//    public boolean logout( HttpSession httpSession){
+//
+//        if( httpSession.getAttribute("loginId")!= null ){
+//            httpSession.removeAttribute("loginId");
+//            return true;
+//        } else { return false; }
+//    }
 
     // 강사님이 하신 방법 (로그인, 로그아웃) ======================================
-
-    // 로그인 [post]
-    @PostMapping("/loginT")
-    public boolean loginT(@RequestBody MemberDto memberDto){
-        boolean result = memberService.loginT( memberDto );
-        return result;
-    }
-
-    // 로그아웃 [get]
-    @GetMapping("/logoutT")
-    public boolean logoutT( ){
-        boolean result = memberService.logoutT( );
-        return result;
-    }
+//
+//    // 로그인 [post]
+//    @PostMapping("/loginT")
+//    public boolean loginT(@RequestBody MemberDto memberDto){
+//        boolean result = memberService.loginT( memberDto );
+//        return result;
+//    }
+//
+//    // 로그아웃 [get]
+//    @GetMapping("/logoutT")
+//    public boolean logoutT( ){
+//        boolean result = memberService.logoutT( );
+//        return result;
+//    }
 
 
 }

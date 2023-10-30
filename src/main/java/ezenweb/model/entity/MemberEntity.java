@@ -4,6 +4,7 @@ package ezenweb.model.entity;
 import ezenweb.model.dto.MemberDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Entity // 해당클래스를 db테이블과 매핑
 @Table(name = "member") // 테이블면 정의 가능 생략시는 해당 클래스명이 곧 db테이블명으로 자동 생성된다.
+@DynamicInsert
 @AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString @Builder
 public class MemberEntity extends BaseTime{
 
@@ -22,7 +24,7 @@ public class MemberEntity extends BaseTime{
     @Column(name = "memail", length = 50, nullable = false, unique = true)
     private String memail;      // 2. 이메일
 
-    @Column(name = "mpassword", length = 30, nullable = false)
+    @Column(name = "mpassword", length = 100, nullable = false)
     private String mpassword;   // 3. 비밀번호
 
     @Column(name = "mname", length = 20, nullable = false)
@@ -32,7 +34,7 @@ public class MemberEntity extends BaseTime{
     private String mphone;      // 5. 전화번호
 
     @Column(name = "mrole", length = 10 )
-    @ColumnDefault("'user'") // 초기값 설정하기 @ColumnDefault("초기값") -> 문자이면 작은따옴표도 넣어야함.
+    @ColumnDefault("'ROLE_USER'") // 초기값 설정하기 @ColumnDefault("초기값") -> 문자이면 작은따옴표도 넣어야함.
     private String mrole;       // 6. 회원등급 ( 일반회원과 관리자회원 구분하기 )
 
     private String mpasswordnew;
