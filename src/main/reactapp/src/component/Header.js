@@ -64,7 +64,7 @@ export default function Header( props ){
                  </>)
                  : (<>
                      <li> { login.memail } 님 </li>
-                     <li> <Link to='/info'> 내정보 </Link> </li>
+                     <li> <a href='/info'> 내정보 </a> </li>
                      <li> <div onClick = { logout } className="logoutbtn"> 로그아웃 </div> </li>
                  </>) }
 
