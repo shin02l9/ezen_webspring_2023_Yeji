@@ -12,6 +12,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 
@@ -22,9 +28,22 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MemberService implements UserDetailsService {
+public class MemberService
+        implements
+        UserDetailsService, // 일반 회원 서비스 : loadUserByUsername 메소드 구현 [ 로그인을 처리하는 메소드 ]
+        OAuth2UserService<OAuth2UserRequest, OAuth2User>  // OAuth2 회원 서비스 : loadUser 메소드 구현 [ 로그인 회원정보를 받는 메소드 ]
+{
+    // p.739  OAuth2 회원 ========================================================
+    @Override
+    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        // 1. 로그인에 성공한 OAuth2 계정의 사용자정보(동의항목)의 정보를 호출한다.
+        OAuth2User oAuth2User = new DefaultOAuth2UserService().loadUser(userRequest);
+        System.out.println("oAuth2User = " + oAuth2User);
+        return null;
+    }
 
-    // ----------------------------------------------------
+
+    // p.687 일반 회원 ========================================================
         // 1. UserDetailsService 구현체
         // 2. 인증처리해주는 메소드 구현
         // 3. loadUserByUsername 메소드는 무조건 UserDetails 객체를 반환해야한다. 그렇지 않으면 로그인 실패
@@ -51,6 +70,7 @@ public class MemberService implements UserDetailsService {
         // p.684
         // 1. 사용자의 아이디 만으로 사용자 정보를 로딩 [ 불러오기 ]
         Optional<MemberEntity> entity = memberRepository.findByMemail(memail);
+
             // 1-1. 없는 아이디이면
                 // throw : 예외처리 던지기 // new UsernameNotFoundException(); 예외클래스
             if( !entity.isPresent() ){
@@ -279,7 +299,9 @@ public class MemberService implements UserDetailsService {
         if( o.equals("anonymousUser")){ return null; }
         // 2. 인증결과에 저장된 UserDetails로 타입변환
         UserDetails userDetails = (UserDetails)o;
+            // 로그인 상태에 필요한 데이터 구성
+        Optional<MemberEntity> memberEntity = memberRepository.findByMemail( userDetails.getUsername() );
         // 3. UserDetails의 정보를 memberDto에 담아서 반환
-        return MemberDto.builder().memail( userDetails.getUsername() ).build();
+        return MemberDto.builder().memail( memberEntity.get().getMemail() ).mno( memberEntity.get().getMno() ).build();
     }
 }

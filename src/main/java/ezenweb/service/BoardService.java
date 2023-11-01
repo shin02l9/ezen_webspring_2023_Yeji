@@ -23,6 +23,13 @@ public class BoardService {
     public boolean postBoard( BoardDto boardDto ) {
         System.out.println("boardDto = " + boardDto);
 
+
+        /*
+            선생님 깃 확인하기
+        */
+
+
+
         // 받아온 DTO를 엔터티로 바꾸고 저장하기
         BoardEntity boardEntity = boardEntityRepository.save(boardDto.saveToBoardEntity());
 
@@ -30,7 +37,7 @@ public class BoardService {
         if( boardEntity.getBno() >= 1 ) { return true; }
         else { return false; }
 
-    };
+    }
 
     // 2. [R] 게시글 출력 (전체)
     @Transactional
@@ -45,7 +52,7 @@ public class BoardService {
             resultList.add( list.saveToBoardDto() );
         });
         return resultList;
-    };
+    }
 
     // 3. [U] 게시글 수정
     @Transactional
@@ -67,7 +74,7 @@ public class BoardService {
         }
         return false;
 
-    };
+    }
 
     // 4. [D] 게시글 삭제
     @Transactional
@@ -79,7 +86,7 @@ public class BoardService {
             return true;
         } else { return false; }
 
-    };
+    }
 
 
 }

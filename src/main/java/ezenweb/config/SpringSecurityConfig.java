@@ -51,6 +51,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/")               // 3. 로그아웃 성공했을때 이동할 HTTP 주소
                 .invalidateHttpSession( true );      // 4. 로그아웃 할때 HTTP 세션 모두 초기화
 
+        // 4. Oauth2 커스텀
+        http.oauth2Login()
+                .loginPage("/login") // Oauth 로그인을 할 view 페이지 HTTP 주소
+                .userInfoEndpoint().userService( memberService ); // 로그인을 성공, OAuth2의 유저 정보를 받을 서비스 선택
+
     }
 
     @Autowired

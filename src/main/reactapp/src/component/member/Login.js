@@ -44,7 +44,11 @@ export default function Login( props ){
             <div className="btnBoxforlogin">
                 <button className="findbtn" type="button"> 아이디찾기 </button> <span> | </span>
                 <button className="findbtn" type="button"> 비밀번호찾기 </button><br/>
-                <button className="loginbtn" type="submit">Login</button>
+                <button className="loginbtn" type="submit">Login</button><br/>
+                <h4> 3초 만에 소셜로그인 하기 </h4> <hr/><br/>
+                <a href="/oauth2/authorization/kakao" className="kakaologinbtn"> KAKAO </a>
+                <a href="/oauth2/authorization/naver" className="naverloginbtn"> NAVER </a>
+                <a href="/oauth2/authorization/google" className="googleloginbtn"> GOOGLE </a>
             </div>
         </form>
     </div>
