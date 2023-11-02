@@ -21,10 +21,16 @@ import Css컴포넌트 from './example/day02/1_CSS적용컴포넌트.js';
 import CommentList from './example/day02/CommentList.js';
 import 과제day01 from './example/day01/과제1_도서목록.jsx';
 import TodoList from './example/day02/과제1_할일목록/TodoList.js';
+import Axios컴포넌트 from './example/day04/1_Axlos컴포넌트.js';
+
+// member
 import Login from './member/Login.js';
 import Signup from './member/Signup.js';
 import Info from './member/Info.js';
-import Axios컴포넌트 from './example/day04/1_Axlos컴포넌트.js';
+
+//board
+import BoardList from './board/BoardList.js';
+import BoardWrite from './board/BoardWrite.js';
 
 
 
@@ -52,6 +58,11 @@ export default function Index( props ){
                 <Route path="/login" element = { <Login />} />
                 <Route path="/signup" element = { <Signup />} />
                 <Route path="/info" element = { <Info />} />
+
+                { /* 게시판 */ }
+                <Route path="/board/list" element = { <BoardList />} />
+                <Route path="/board/write" element = { <BoardWrite />} />
+
             </Routes>
         </div>
         <Footer />

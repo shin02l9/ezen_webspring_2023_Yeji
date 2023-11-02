@@ -27,6 +27,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         // 0. 인증(로그인)된 인가(권한/허가) 통해 페이지 접근 제한
         http.authorizeHttpRequests() // 1. 인증된 권한에 따른 HTTP 요청 제한
                 .antMatchers("/info").hasRole("USER")   // 인증된 권한 중에 ROLE_USER 권한명 일치
+                .antMatchers("/board/write").hasRole("USER")
                 .antMatchers("/**").permitAll();        // 모든 페이지는 권한 모두 허용
 
 
@@ -41,9 +42,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("memail")                // 6. 로그인시 입력받은 아이디의 변수명 정의
                 .passwordParameter("mpassword");            // 7. 로그인시 입력받은 비밀번호의 변수명 정의
         // 2. CSRF 커스텀
-        //http.csrf().disable(); // 모두 HTTP post/put 에서 csrf 사용 안함
-        http.csrf().ignoringAntMatchers("/member/login"); // 특정 HTTP 경로에서만 csrf 사용안함
-        http.csrf().ignoringAntMatchers("/member/do"); // 특정 HTTP 경로에서만 csrf 사용안함
+        http.csrf().disable(); // 모두 HTTP post/put 에서 csrf 사용 안함
+        //http.csrf().ignoringAntMatchers("/member/login"); // 특정 HTTP 경로에서만 csrf 사용안함
+        //http.csrf().ignoringAntMatchers("/member/do"); // 특정 HTTP 경로에서만 csrf 사용안함
 
         // 3. 로그아웃 [ 시큐리티 사용전에 컨트롤러와 서비스에 로그아웃 메소드 제거하기 ]
         http.logout()                                // 1. 로그인 인증 로그아웃 처리

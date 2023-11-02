@@ -17,7 +17,8 @@ public class BoardController {
 
     // 1. [C] 게시글 등록
     @PostMapping("/do")
-    public boolean postBoard( @RequestBody BoardDto boardDto ) {
+    public boolean postBoard( BoardDto boardDto ) {
+        System.out.println("BoardController.postBoard");
         return boardService.postBoard(boardDto);
     };
 
