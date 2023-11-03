@@ -1,6 +1,38 @@
 
+/*
+    mui 라는 리액트 전용 라이브러리
+        1. 설치 ( 리액트 폴더에 설치하기! )
+                npm install @mui/material @emotion/react @emotion/styled
+                npm install @mui/material @mui/styled-engine-sc styled-components
+        2. 예제
+            1. 호출을 컴포넌트 상단에 하기
+                import Button from '@mui/material/Button';
+            2. 호출된 버튼을 바로 사용하기
+                <Button variant="contained">Hello world</Button>;
+
+
+*/
+
+
+
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+
+/*   ------------ MUI Table 관련 컨포넌트 ------------   */
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
+/*   ------------ MUI Table 샘플 ------------   */
+function createData(name, calories, fat, carbs, protein) {
+  return { name, calories, fat, carbs, protein };
+}
+
+
 
 export default function BoardList( props ){
 
@@ -30,31 +62,59 @@ export default function BoardList( props ){
 
 
 
-    return(<>
-        <div>
-            <h3> 게시물 목록 </h3>
-            <a href="/board/write"> 글쓰기 </a>
+  return (<>
+           <div>
+              {/*<Button variant="contained">Hello world</Button>*/}
+              <h3> 게시물 목록 </h3>
+              <a href="/board/write"> 글쓰기 </a>
 
-            <table className="">
-                <tr>
-                    <th>번호</th> <th>제목</th> <th>작성자</th>
-                    <th>작성일</th> <th>조회수</th>
-                </tr>
+              <table className="">
+                  <tr>
+                      <th>번호</th> <th>제목</th> <th>작성자</th>
+                      <th>작성일</th> <th>조회수</th>
+                  </tr>
 
-                {/* 게시물목록 출력*/}
-                {
-                rows.map( (row) => {
-                    return(<>
-                        <tr>
-                            <td>{row.bno}</td> <td>{row.btitle}</td> <td>{row.mno}</td>
-                            <td>{row.cdate}</td> <td>{row.bview}</td>
-                        </tr>
-                    </>)
-                })
-                }
-            </table>
+                  {/* 게시물목록 출력*/}
+                  {
+                  rows.map( (row) => {
+                      return(<>
+                          <tr>
+                              <td>{row.bno}</td> <td>{row.btitle}</td> <td>{row.mno}</td>
+                              <td>{row.cdate}</td> <td>{row.bview}</td>
+                          </tr>
+                      </>)
+                  })
+                  }
+              </table>
+          </div>
 
-
-        </div>
-    </>)
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      {/* 테이블 제목 구역 */}
+        <TableHead>
+          <TableRow>
+            <TableCell align="right">번호</TableCell>
+            <TableCell align="right">제목</TableCell>
+            <TableCell align="right">작성자</TableCell>
+            <TableCell align="right">작성일</TableCell>
+            <TableCell align="right">조회수</TableCell>
+          </TableRow>
+        </TableHead>
+        {/* 테이블 내용 구역 */}
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              <TableCell component="th" scope="row"> {row.bno} </TableCell>
+              <TableCell align="right">{row.bno}</TableCell>
+              <TableCell align="right">{row.btitle}</TableCell>
+              <TableCell align="right">{row.mno}</TableCell>
+              <TableCell align="right">{row.cdate}</TableCell>
+              <TableCell align="right">{row.bview}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  </>);
 }
+

@@ -5,6 +5,8 @@ import ezenweb.model.dto.MemberDto;
 import ezenweb.model.entity.MemberEntity;
 import ezenweb.model.repository.MemberEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,9 +24,12 @@ import org.springframework.stereotype.Service;
 
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -39,7 +44,74 @@ public class MemberService
         // 1. 로그인에 성공한 OAuth2 계정의 사용자정보(동의항목)의 정보를 호출한다.
         OAuth2User oAuth2User = new DefaultOAuth2UserService().loadUser(userRequest);
         System.out.println("oAuth2User = " + oAuth2User);
-        return null;
+        // 2. 인증결과( 카카오, 네이버, 구글 )
+        // 2-1. 인증한 소셜 서비스 아이디 찾기
+        String registrationId = userRequest.getClientRegistration().getRegistrationId();
+        System.out.println("registrationId = " + registrationId);
+
+
+        String memail = null;
+        String mname = null;
+        String mrole = null;
+
+        // 2-2. 카카오 이면
+        if(registrationId.equals("kakao")){
+            //System.out.println( oAuth2User.getAttributes("Name").toString());
+            System.out.println( oAuth2User.getAttributes());
+            System.out.println( oAuth2User.getAuthorities());
+
+            //memail = oAuth2User.getAttributes().get("email").toString();
+            Map<String, Object > kakaoAccount = (Map<String, Object >)oAuth2User.getAttributes().get("kakao_account");
+            Map<String, Object > profile = (Map<String, Object >)kakaoAccount.get("profile");
+            mname = profile.get("nickname").toString(); // 카카오회원의 닉네임
+            memail = kakaoAccount.get("email").toString();   // 카카오회원의 이메일
+            Object[] objects = oAuth2User.getAuthorities().toArray();
+
+            System.out.println( memail );
+            System.out.println( mname );
+            System.out.println( objects );
+
+        }
+        // 2-3. 네이버 이면
+        if(registrationId.equals("naver")){
+            Map<String, Object > response = (Map<String, Object >)oAuth2User.getAttributes().get("response");
+            mname = response.get("nickname").toString();
+            memail = response.get("email").toString();
+
+        }
+        // 2-4. 구글 이면
+        if(registrationId.equals("google")){
+            mname = oAuth2User.getAttributes().get("name").toString();
+            memail = oAuth2User.getAttributes().get("email").toString();
+        }
+
+        // 3. 일반 회원이랑 oAuth2 회원이랑 로그인 처리 통합 => DTO를 같이 쓴다는 뜻
+            // 권한 목록에 추가
+        List<GrantedAuthority> 권한목록 = new ArrayList<>();
+        권한목록.add(
+                new SimpleGrantedAuthority("ROLE_"+registrationId)
+        );
+            // DTO 만들기
+        MemberDto memberDto = MemberDto.builder()
+                // oAuth2는 비밀번호를 알 수 없음.
+                .memail( memail )
+                .mname( mname )
+                .권한목록( 권한목록 )
+                .소셜회원정보( oAuth2User.getAttributes() )
+                .build();
+
+            // 만약에 처음 최초 접속한 회원이면 DB처리 아니면 X
+        if( !memberRepository.existsByMemail(memail)){
+            memberDto.setMrole("ROLE_USER");
+            memberDto.setMpassword(new BCryptPasswordEncoder().encode(mname));
+            memberRepository.save( memberDto.toMemberEntity() );
+        } else {
+            memberDto.setMrole( memberRepository.findByMemail( memail ).get().getMrole() );
+        }
+        // 권한 추가
+        memberDto.get권한목록().add( new SimpleGrantedAuthority( memberDto.getMrole() ));
+
+        return memberDto;
     }
 
 
@@ -77,13 +149,20 @@ public class MemberService
                 throw new UsernameNotFoundException("없는 아이디입니다.");
             }
         // 2. 로딩된 사용자의 정보를 이용해서 패스워드를 검증
-            // 2-1. 있는 아이디 이면
-        UserDetails userDetails = User.builder()
-                .username( entity.get().getMemail() )    // 찾은 사용자 정보 내 아이디
-                .password( entity.get().getMpassword() ) // 찾은 사용자 정보 내 패스워드
-                .authorities( entity.get().getMrole() )  // 찾은 사용자 정보의 권한
+            // 2-1. 권한 목록 추가
+        List<GrantedAuthority> 권한목록 = new ArrayList<>();
+        권한목록.add(
+                new SimpleGrantedAuthority(entity.get().getMrole() )
+        );
+        // DTO 만들기
+        MemberDto memberDto = MemberDto.builder()
+                // oAuth2는 비밀번호를 알 수 없음.
+                .memail( entity.get().getMemail() )
+                .mname( entity.get().getMname() )
+                .mpassword(entity.get().getMpassword())
+                .권한목록( 권한목록 )
                 .build();
-        return userDetails;
+        return memberDto;
     }
 
 

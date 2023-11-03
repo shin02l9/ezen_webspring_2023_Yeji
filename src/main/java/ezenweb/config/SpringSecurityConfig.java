@@ -1,6 +1,7 @@
 package ezenweb.config;
 
 
+import ezenweb.controller.AuthLoginController;
 import ezenweb.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -19,8 +20,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 // configure(HttpSecurity http)
 
     // p.685 : configure(HttpSecurity http) HTTP 관련된 보안 담당하는 메소드
+
+    @Autowired
+    private MemberService memberService;
+    @Autowired
+    private AuthLoginController authLoginController;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+
         //super.configure(http);
         // ▲ 위 코드의 주석을 풀면 로그인 창이 뜨고 주석처리하면 안뜸 (보안이 풀림)
 
@@ -37,10 +46,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/member/login")    // 3. 인증처리 요청을 보낼때 사용할 HTTP 주소
                 // 시큐리티 사용하기전에 정의한 로그인 로그아웃 함수 없애기
                 // HTTP "/member/login" POST 요청시 -----> MemberService의 loadUserByUsername 으로 이동한다.
-                .defaultSuccessUrl("/")                     // 4. 만약에 로그인 성공시 이동할 HTTP 주소
-                .failureUrl("/login")   // 5. 만약에 로그인 실패시 이동할 HTTP 주소
+               //.defaultSuccessUrl("/")                     // 4. 만약에 로그인 성공시 이동할 HTTP 주소
+                //.failureUrl("/login")   // 5. 만약에 로그인 실패시 이동할 HTTP 주소
                 .usernameParameter("memail")                // 6. 로그인시 입력받은 아이디의 변수명 정의
-                .passwordParameter("mpassword");            // 7. 로그인시 입력받은 비밀번호의 변수명 정의
+                .passwordParameter("mpassword")            // 7. 로그인시 입력받은 비밀번호의 변수명 정의
+                .successHandler( authLoginController ) // 로그인 성공했을때 해당 클래스 매핑
+                .failureHandler( authLoginController ); // 로그인 실패했을때 해당 클래스 매핑
         // 2. CSRF 커스텀
         http.csrf().disable(); // 모두 HTTP post/put 에서 csrf 사용 안함
         //http.csrf().ignoringAntMatchers("/member/login"); // 특정 HTTP 경로에서만 csrf 사용안함
@@ -59,8 +70,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-    @Autowired
-    private MemberService memberService;
+
     // p.689 : configure(AuthenticationManagerBuilder auth) 웹 시큐리티의 인증을 담당하는 메소드
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

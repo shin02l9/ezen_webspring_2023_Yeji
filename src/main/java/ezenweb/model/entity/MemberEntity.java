@@ -30,7 +30,7 @@ public class MemberEntity extends BaseTime{
     @Column(name = "mname", length = 20, nullable = false)
     private String mname;       // 4. 이름
 
-    @Column(name = "mphone", length = 13, nullable = false, unique = true)
+    @Column(name = "mphone", length = 13, nullable = true, unique = true)
     private String mphone;      // 5. 전화번호
 
     @Column(name = "mrole", length = 10 )
