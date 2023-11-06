@@ -9,6 +9,7 @@ import ezenweb.model.repository.BoardEntityRepository;
 import ezenweb.model.repository.MemberEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -92,6 +93,16 @@ public class BoardService {
         });
         return resultList;
     }
+
+    // 2-2. [R] 게시글 출력 (개별)
+    @Transactional
+    public BoardDto getBoardOne( int bno ) {
+        Optional<BoardEntity> boardEntity = boardEntityRepository.findById(bno);
+        if( boardEntity.isPresent() ) {
+            return boardEntity.get().printOneToBoardDto();
+        }
+        return null;
+    };
 
     // 3. [U] 게시글 수정
     @Transactional

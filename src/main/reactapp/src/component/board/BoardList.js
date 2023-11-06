@@ -17,6 +17,7 @@
 
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 /*   ------------ MUI Table 관련 컨포넌트 ------------   */
 import Table from '@mui/material/Table';
@@ -63,30 +64,8 @@ export default function BoardList( props ){
 
 
   return (<>
-           <div>
-              {/*<Button variant="contained">Hello world</Button>*/}
               <h3> 게시물 목록 </h3>
               <a href="/board/write"> 글쓰기 </a>
-
-              <table className="">
-                  <tr>
-                      <th>번호</th> <th>제목</th> <th>작성자</th>
-                      <th>작성일</th> <th>조회수</th>
-                  </tr>
-
-                  {/* 게시물목록 출력*/}
-                  {
-                  rows.map( (row) => {
-                      return(<>
-                          <tr>
-                              <td>{row.bno}</td> <td>{row.btitle}</td> <td>{row.mno}</td>
-                              <td>{row.cdate}</td> <td>{row.bview}</td>
-                          </tr>
-                      </>)
-                  })
-                  }
-              </table>
-          </div>
 
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -104,9 +83,10 @@ export default function BoardList( props ){
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell component="th" scope="row"> {row.bno} </TableCell>
               <TableCell align="right">{row.bno}</TableCell>
-              <TableCell align="right">{row.btitle}</TableCell>
+              <TableCell align="right">
+                <Link to={ "/board/view?bno="+row.bno }> {row.btitle} </Link>
+              </TableCell>
               <TableCell align="right">{row.mno}</TableCell>
               <TableCell align="right">{row.cdate}</TableCell>
               <TableCell align="right">{row.bview}</TableCell>

@@ -31,6 +31,8 @@ import Info from './member/Info.js';
 //board
 import BoardList from './board/BoardList.js';
 import BoardWrite from './board/BoardWrite.js';
+import BoardView from './board/BoardView.js';
+import BoardUpdate from './board/BoardUpdate.js';
 
 
 
@@ -62,6 +64,8 @@ export default function Index( props ){
                 { /* 게시판 */ }
                 <Route path="/board/list" element = { <BoardList />} />
                 <Route path="/board/write" element = { <BoardWrite />} />
+                <Route path="/board/view" element = { <BoardView />} />
+                <Route path="/board/update" element = { <BoardUpdate />} />
 
             </Routes>
         </div>

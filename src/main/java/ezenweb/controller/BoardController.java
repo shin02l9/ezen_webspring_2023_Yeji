@@ -25,20 +25,31 @@ public class BoardController {
     // 2. [R] 게시글 출력 (전체)
     @GetMapping("/do")
     public List<BoardDto> getBoard( ) {
+
         return boardService.getBoard();
+    };
+
+    // 2-2. [R] 게시글 출력 (개별)
+    @GetMapping("/doOne")
+    public BoardDto getBoardOne( @RequestParam int bno ) {
+
+        return boardService.getBoardOne(bno);
     };
 
     // 3. [U] 게시글 수정
     @PutMapping("/do")
     public boolean putBoard( @RequestBody BoardDto boardDto ) {
+
         return boardService.putBoard(boardDto);
     };
 
     // 4. [D] 게시글 삭제
     @DeleteMapping("/do")
     public boolean deleteBoard( @RequestParam int bno ) {
+
         return boardService.deleteBoard(bno);
     };
+
 
 
 }
