@@ -43,6 +43,8 @@ export default function BoardView( props ){
         <h3>BoardView 게시물번호 = {bno}</h3>
         <div> 제목 : { board.btitle } </div>
         <div> 내용 : { board.bcontent } </div>
+        <div> 조회수 : { board.bview } </div>
+
 
          {/* 삭제와 수정은 본인만 가능*/}
          {/* 삼항 연산자를 이용한 컴포넌트 출력 */

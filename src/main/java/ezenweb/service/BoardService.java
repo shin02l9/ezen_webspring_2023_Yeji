@@ -16,9 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class BoardService {
@@ -85,7 +83,7 @@ public class BoardService {
 
     // 2. [R] 게시글 출력 (전체)
     @Transactional
-    public PageDto getBoard( int page, String key, String keyword) {
+    public PageDto getBoard( int page, String key, String keyword, int view) {
 
         // JPA 페이징 처리 라이브러리 지원
             // 1. Pageable : 페이지 인터페이스
@@ -98,7 +96,8 @@ public class BoardService {
                 // 하지만 다르게 추가적으로 getTotalPages를 줌 ㄷㄷㄷㄷㄷㄷㄷ map도 쓸수있음 킹왕짱편리함이다.
 
                             // new 안하는 이유 : 함수가 휘어있음.. 스태틱임. 그럼 객체 만들어 쓸 필요가 없음.
-        Pageable pageable  = PageRequest.of(page-1,2);
+        Pageable pageable  = PageRequest.of(page-1,view);
+                        // + 정렬도 지원해줌 PageRequest.of(page-1,view, Sort.by( Sort.Direction.DESC또는ASC, "기준필드명"));
 
 
         // 1. 모든 게시물 출력이니 일단 죄다 꺼내오기
@@ -111,10 +110,12 @@ public class BoardService {
         boardEntities.forEach( list -> {
             resultList.add( list.saveToBoardDto() );
         });
+
             // 3. 총 페이지수
         int totalPages = boardEntities.getTotalPages();
             // 4. 총 게시물수
         long totalCount = boardEntities.getTotalElements();
+
 
         // 5. DTO 구성해서 반환하기
         PageDto resuldto = PageDto.builder()
@@ -122,6 +123,7 @@ public class BoardService {
                 .totalPages( totalPages )
                 .totalCount( totalCount )
                 .build();
+
 
         return resuldto;
     }
@@ -131,7 +133,10 @@ public class BoardService {
     public BoardDto getBoardOne( int bno ) {
         Optional<BoardEntity> boardEntity = boardEntityRepository.findById(bno);
         if( boardEntity.isPresent() ) {
-            return boardEntity.get().printOneToBoardDto();
+            BoardEntity entity = boardEntity.get();
+            // 조회수 증가
+            entity.setBview( entity.getBview()+1 );
+            return entity.printOneToBoardDto();
         }
         return null;
     };

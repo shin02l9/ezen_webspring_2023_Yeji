@@ -55,33 +55,34 @@ export default function BoardList( props ){
 
     });
 
+
     // 0. 스프링에게 전달할 객체
     let [ pageInfo, setPageInfo ] = useState({
         page : 1,
-        key : '',
-        keyword : ''
+        key : 'btitle',
+        keyword : '',
+        view : 5,
+        searchOn : false
         }
     );
 
-    console.log('pageInfo')
-    console.log(pageInfo)
+    // 1. axios를 이용한 스프링의 컨트롤과 통신 / 게시물 출력하기
+    const getBoard = (e) => {
+        axios.get("/board/do", { params : pageInfo })
+            .then( r => {
+                //console.log(r.data);
+                setPageDto(r.data); // 응답받은 모든 게시물을 상태 변수에 저장한다.
+                // setState : 해당 컴포넌트가 업데이트(새로고침/재랜더링/return재실행)
+                // 무한루프에 빠지는 문제점 발생 ㅋㅋㅋㅋㅋㅋㅋ
+                // 그래서 useEffect 으로 감싸준다.
+            })
+    }
+
+    // 컴포넌트가 생성될 때, 검색 버튼이 눌렸을 때, 페이지가 변경될때 랜더링
+    useEffect ( () => { getBoard(); } , [ pageInfo.page, pageInfo.view, pageInfo.searchOn  ] )
 
 
-
-    // 1. axios를 이용한 스프링의 컨트롤과 통신
-    useEffect ( () => {
-        axios.get("/board/do", { params : { page : pageInfo.page, key :, pageInfo.key, keyword : pageInfo.keyword }})
-        .then( r => {
-            //console.log(r.data);
-            setPageDto(r.data); // 응답받은 모든 게시물을 상태 변수에 저장한다.
-            // setState : 해당 컴포넌트가 업데이트(새로고침/재랜더링/return재실행)
-            // 무한루프에 빠지는 문제점 발생 ㅋㅋㅋㅋㅋㅋㅋ
-            // 그래서 useEffect 으로 감싸준다.
-        })
-    } , [ pageInfo ])// -> 페이지가 변경될때마다 실행하기
-
-
-    // 페이지 버튼을 클릭 했을때
+    // 2. 페이지 버튼을 클릭 했을때
     const onPageSelect = (e, value) => {
         //console.log('onPageSelect')
         //console.log(value)
@@ -89,12 +90,16 @@ export default function BoardList( props ){
         setPageInfo( {...pageInfo} )
     }
 
-    // 검색 버튼을 클릭 했을때
+    // 3. 검색 버튼을 클릭 했을때
     const onSearch = (e) => {
-
-
+        // 페이지를 바꾸다가 검색 했을시 다시 1페이지로 이동 해야함!
+        setPageInfo( {...pageInfo, page : 1 , searchOn : true } )
     }
 
+    // 4. 검색 제거 버튼 클릭 했을때
+    const deleteSearch = (e) => {
+        setPageInfo({ ...pageInfo, page: 1, key: 'btitle', keyword: '', searchOn : false });
+    }
 
 
 
@@ -103,12 +108,26 @@ export default function BoardList( props ){
           <h3> 게시물 목록 </h3>
           <a href="/board/write"> 글쓰기 </a>
           <p> 현재 페이지 번호 : { pageInfo.page }</p>
+          {/* 표시할 게시물 수 선택하기 */}
+          <select value={ pageInfo.view }
+            onChange={ (e) => { setPageInfo ({ ...pageInfo, view : e.target.value }); }}
+          >
+                <option value="5"> 5 </option>
+                <option value="10"> 10 </option>
+                <option value="15"> 15 </option>
+          </select>
+
+          {/* 검색 제거 버튼 on/off */}
+          { pageInfo.searchOn == false ?
+                    '' :
+                    <button onClick={ deleteSearch } type="button"> 검색제거 </button>
+          }
 
 
             <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <Table sx={{ minWidth: 650 }} aria-label="simple table" >
               {/* 테이블 제목 구역 */}
-                <TableHead>
+                <TableHead className="boardMuiTable">
                   <TableRow>
                     <TableCell align="right">번호</TableCell>
                     <TableCell align="right">제목</TableCell>
@@ -118,14 +137,14 @@ export default function BoardList( props ){
                   </TableRow>
                 </TableHead>
                 {/* 테이블 내용 구역 */}
-                <TableBody>
+                <TableBody className="boardMuiTable">
                   {pageDto.boardDtos.map((row) => (
                     <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                       <TableCell align="right">{row.bno}</TableCell>
                       <TableCell align="right">
                         <Link to={ "/board/view?bno="+row.bno }> {row.btitle} </Link>
                       </TableCell>
-                      <TableCell align="right">{row.mno}</TableCell>
+                      <TableCell align="right">{row.mname}</TableCell>
                       <TableCell align="right">{row.cdate}</TableCell>
                       <TableCell align="right">{row.bview}</TableCell>
                     </TableRow>
@@ -137,7 +156,7 @@ export default function BoardList( props ){
 
         {/* 페이징 처리하기 */}
         <div className="PaginationBox" >
-            <Pagination count={pageDto.totalPages}
+            <Pagination page = {pageInfo.page} count={pageDto.totalPages}
                         onChange={onPageSelect} />
         </div>
 

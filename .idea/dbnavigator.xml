@@ -33,14 +33,15 @@
     <connection id="d206cc26-02d1-4208-902d-c9680fde9d8b">
       <console name="Connection" type="STANDARD" schema="" session="Main" />
       <console name="SpringDB" type="STANDARD" schema="springweb" session="Main"><![CDATA[use springweb;
-drop table todo;
-create table todo (
-    tno int auto_increment,
-    tcontent varchar(100),
-    tstate boolean,
-    primary key(tno)
-);
-select * from todo;
+
+
+# if( 조건 , 참, 거짓)
+if( 3>10, 1, 0);
+select if (3>10 ,'3이 크다', '3이 작다') from dual; # dual : 임시 테이블
+if( keyword = '', 전체검색, 조건검색 )
+if( keyword = '', "전체검색", if( key = 'btitle', "타이틀검색", if( key = 'bcontent', "내용검색") ) )
+
+
 
 /* DB 상태 최신화 */
 commit;]]></console>
@@ -50,7 +51,9 @@ commit;]]></console>
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="d206cc26-02d1-4208-902d-c9680fde9d8b" object-ref="consoles/SpringDB" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="d206cc26-02d1-4208-902d-c9680fde9d8b" dataset="springweb.member" active-filter-id="" />

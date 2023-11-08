@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 // ┌> 공통된 어노테이션 정보 등을 부모 클래스로 선언하고 어노테이션 정보를 자식 클래스에게 제공할떄 사용함
 @MappedSuperclass // 엔티티가 아님.. 여러 엔티티가 사용하는 필드에 대해 구성할때 | @CreatedDate, @LastModifiedDate 이 어노테이션들까지 자동으로 상속되지 않음 그래서 그걸 하려고 적은 어노테이션이다.
@@ -20,6 +21,13 @@ public class BaseTime {
     @LastModifiedDate
     public LocalDateTime udate;    // 엔티티/레코드 수정날짜
 
+
+    // 1. 날짜 형변환 메소드 [자바 기준] // 구글링 키워드 : java localdatetime 형식 변환
+    public String toStringForDate( LocalDateTime dateTime){
+        return dateTime.toLocalDate().toString().equals( LocalDateTime.now().toLocalDate().toString() )
+                ? dateTime.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss") )   // 오늘과 같으면 시간만 반환
+                : dateTime.toLocalDate().format(DateTimeFormatter.ofPattern("yyyy:MM:dd") ); // 오늘과 다르면 날짜만 반환
+    }
 }
 
 /*

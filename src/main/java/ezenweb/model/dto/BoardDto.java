@@ -16,10 +16,14 @@ public class BoardDto {
     private String bcontent;
     private int bview;
     private String bfile;
-    private int mno;
 
-    public LocalDateTime cdate;
-    public LocalDateTime udate;
+    private int mno;
+    private String mname;
+
+    public String cdate;
+    public String udate;
+
+
 
     // Dto -> Entity
     // 저장할 때
@@ -29,6 +33,6 @@ public class BoardDto {
               .bcontent( this.bcontent )
               .bfile( this.bfile)
               .build();
-    };
+    }
 
 }

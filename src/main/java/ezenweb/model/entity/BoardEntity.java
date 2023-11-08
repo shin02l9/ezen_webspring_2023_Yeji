@@ -59,11 +59,12 @@ public class BoardEntity extends BaseTime{
                 .bcontent( this.bcontent )
                 .bview( this.bview )
                 .bfile( this.bfile )
-                .cdate( this.cdate )
-                .udate( this.udate )
+                .cdate( toStringForDate(this.cdate) ) // 구글링 키워드 : java localdatetime 형식 변환
+                .udate( toStringForDate(this.udate) )
                 .mno( this.memberEntity.getMno() )
+                .mname( this.memberEntity.getMname() )
                 .build();
-    };
+    }
     // 2. 개별 출력할 때
     public BoardDto printOneToBoardDto() {
         return BoardDto.builder()
@@ -72,11 +73,12 @@ public class BoardEntity extends BaseTime{
                 .bcontent( this.bcontent )
                 .bview( this.bview )
                 .bfile( this.bfile )
-                .cdate( this.cdate )
-                .udate( this.udate )
+                .cdate( toStringForDate(this.cdate) )
+                .udate( toStringForDate(this.udate) )
                 .mno( this.memberEntity.getMno() )
+                .mname( this.memberEntity.getMname() )
                 .build();
-    };
+    }
 
 
     // 3. 저장할 때
@@ -87,11 +89,12 @@ public class BoardEntity extends BaseTime{
                 .bcontent( this.bcontent )
                 .bview( this.bview )
                 .bfile( this.bfile )
-                .cdate( this.getCdate() )
-                .udate( this.getUdate() )
+                .cdate( toStringForDate(this.cdate) )
+                .udate( toStringForDate(this.udate) )
                 .mno( this.memberEntity.getMno() )
+                .mname( this.memberEntity.getMname() )
                 .build();
-    };
+    }
 
 
 }

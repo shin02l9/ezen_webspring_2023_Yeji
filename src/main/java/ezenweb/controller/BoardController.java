@@ -19,7 +19,7 @@ public class BoardController {
     // 1. [C] 게시글 등록
     @PostMapping("/do")
     public boolean postBoard( BoardDto boardDto ) {
-        System.out.println("BoardController.postBoard");
+
         return boardService.postBoard(boardDto);
     };
 
@@ -27,9 +27,10 @@ public class BoardController {
     @GetMapping("/do")
     public PageDto getBoard(@RequestParam int page,
                             @RequestParam String key,
-                            @RequestParam String keyword) {
+                            @RequestParam String keyword,
+                            @RequestParam int view) {
 
-        return boardService.getBoard(page, key, keyword);
+        return boardService.getBoard(page, key, keyword, view);
     };
 
     // 2-2. [R] 게시글 출력 (개별)
