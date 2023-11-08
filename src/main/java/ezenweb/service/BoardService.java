@@ -3,11 +3,15 @@ package ezenweb.service;
 
 import ezenweb.model.dto.BoardDto;
 import ezenweb.model.dto.MemberDto;
+import ezenweb.model.dto.PageDto;
 import ezenweb.model.entity.BoardEntity;
 import ezenweb.model.entity.MemberEntity;
 import ezenweb.model.repository.BoardEntityRepository;
 import ezenweb.model.repository.MemberEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -81,17 +85,45 @@ public class BoardService {
 
     // 2. [R] 게시글 출력 (전체)
     @Transactional
-    public List<BoardDto> getBoard( ) {
+    public PageDto getBoard( int page, String key, String keyword) {
 
-        // 모든 게시물 출력이니 일단 죄다 꺼내오기
-        List<BoardEntity> boardEntities = boardEntityRepository.findAll();
+        // JPA 페이징 처리 라이브러리 지원
+            // 1. Pageable : 페이지 인터페이스
+                // 사용 이유 : Repository인터페이스가 페이징 처리할때 사용하는 인터페이스
+            // 2. 인터페이스는 무조건 구현체가 필요하다. ( 추상메소드를 구현해 주는 객체 )
+                // of(현재페이지)
+                // 현재페이지는 0 부터 시작함. 그래서 1깍아주기
+                // size 페이지별 게시물수
+            // 3. Page는 List와 마찬가지로 여러개의 객체를 저장하는 타입이다 .
+                // 하지만 다르게 추가적으로 getTotalPages를 줌 ㄷㄷㄷㄷㄷㄷㄷ map도 쓸수있음 킹왕짱편리함이다.
 
-        // 받아온 Entity를 Dto 로 변환하기
+                            // new 안하는 이유 : 함수가 휘어있음.. 스태틱임. 그럼 객체 만들어 쓸 필요가 없음.
+        Pageable pageable  = PageRequest.of(page-1,2);
+
+
+        // 1. 모든 게시물 출력이니 일단 죄다 꺼내오기
+        // Page<BoardEntity> boardEntities = boardEntityRepository.findAll(pageable);
+        Page<BoardEntity> boardEntities =
+                boardEntityRepository.findBySearch( key, keyword, pageable);
+
+        // 2. 받아온 Entity를 Dto 로 변환하기
         List<BoardDto> resultList = new ArrayList<>();
         boardEntities.forEach( list -> {
             resultList.add( list.saveToBoardDto() );
         });
-        return resultList;
+            // 3. 총 페이지수
+        int totalPages = boardEntities.getTotalPages();
+            // 4. 총 게시물수
+        long totalCount = boardEntities.getTotalElements();
+
+        // 5. DTO 구성해서 반환하기
+        PageDto resuldto = PageDto.builder()
+                .boardDtos( resultList )
+                .totalPages( totalPages )
+                .totalCount( totalCount )
+                .build();
+
+        return resuldto;
     }
 
     // 2-2. [R] 게시글 출력 (개별)

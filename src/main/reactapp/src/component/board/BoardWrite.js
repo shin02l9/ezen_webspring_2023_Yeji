@@ -13,9 +13,9 @@ export default function BoardWrite( props ){
             axios.post("/board/do", boardFormData)
                 .then( result => { console.log(result)
                     if(result){
-                        alert('글 등록 성공');
+                        alert('게시글 등록 성공');
                         window.location.href = '/board/list';
-                    } else { alert(' 글 등록 실패')}
+                    } else { alert(' 게시글 등록 실패')}
 
 
                 } );

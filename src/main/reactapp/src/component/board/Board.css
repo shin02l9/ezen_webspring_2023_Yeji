@@ -1,0 +1,9 @@
+.PaginationBox{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.searchbox{
+    margin-top: 20px;
+}
