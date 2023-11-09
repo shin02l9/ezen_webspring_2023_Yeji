@@ -13,9 +13,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 import javax.transaction.Transactional;
+import java.io.File;
 import java.util.*;
 
 @Service
@@ -27,11 +28,12 @@ public class BoardService {
     private MemberService memberService;
     @Autowired
     private MemberEntityRepository memberEntityRepository;
+    @Autowired
+    private FileService fileService;
 
     // 1. [C] 게시글 등록
     @Transactional
     public boolean postBoard( BoardDto boardDto ) {
-        System.out.println("boardDto = " + boardDto);
 
         /*
             MemberEntity                                BoardEntity
@@ -64,20 +66,22 @@ public class BoardService {
         boardEntity.setMemberEntity( memberEntityOptional.get() );
         // ================================= 단방향 end ================================================= //
 
-
+        // 받아온 DTO를 엔터티로 바꾸고 저장하기
+        //BoardEntity boardEntity = boardEntityRepository.save(boardDto.saveToBoardEntity());
 
         // ================================= 양방향 ================================================= //
             // 5. 양방향 저장 [ 회원엔티티에 게시물 엔티티 넣어주기 ]
         memberEntityOptional.get().getBoardEntitiyList().add( boardEntity );
         // ================================= 양방향 end ================================================= //
-        if( boardEntity.getBno() >= 1) { return true; } return false;
 
-//        // 받아온 DTO를 엔터티로 바꾸고 저장하기
-//        BoardEntity boardEntity = boardEntityRepository.save(boardDto.saveToBoardEntity());
-//
-//        // 응답하기 ( bno가 1보다 큰지 조건 거는 이유 : 0 이상이어야 auto-increment 적용 된거라서.
-//        if( boardEntity.getBno() >= 1 ) { return true; }
-//        else { return false; }
+        // 응답하기 ( bno가 1보다 큰지 조건 거는 이유 : 0 이상이어야 auto-increment 적용 된거라서.
+        if( boardEntity.getBno() >= 1) {
+            // 게시물쓰기 성공시에 파일 처리 하기
+            String filename = fileService.fileUpload( boardDto.getFile() );
+            if (filename != null) { boardEntity.setBfile( filename ); }
+            return true;
+        } return false;
+
 
     }
 

@@ -29,11 +29,11 @@ export default function BoardWrite( props ){
             <h3> 게시물 쓰기 </h3>
             <form className="boardForm" >
                 <h4> 제목 </h4>
-                <input type="text" name="btitle" />
+                <input type="text" name="btitle" /> <br/>
                 <h4> 내용 </h4>
-                <textarea  name="bcontent" > </textarea>
-                {/*<h4> 첨부파일 </h4>
-                <input type ="file" name="bfile" />*/}
+                <textarea  name="bcontent" > </textarea> <br/>
+                <h4> 첨부파일 </h4>
+                <input type ="file" name="file" /> <br/>
                 <button type="button" onClick={ boardWrite } > 등록하기 </button>
             </form>
         </div>

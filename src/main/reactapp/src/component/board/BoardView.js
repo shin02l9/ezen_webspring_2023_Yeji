@@ -44,6 +44,7 @@ export default function BoardView( props ){
         <div> 제목 : { board.btitle } </div>
         <div> 내용 : { board.bcontent } </div>
         <div> 조회수 : { board.bview } </div>
+        <div> <a href={"/board/fileDownload?UUIDfileName="+board.bfile}> 첨부파일 : { board.bfile } </a> </div>
 
 
          {/* 삭제와 수정은 본인만 가능*/}

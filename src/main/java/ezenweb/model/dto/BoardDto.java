@@ -2,6 +2,7 @@ package ezenweb.model.dto;
 
 import ezenweb.model.entity.BoardEntity;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -22,6 +23,9 @@ public class BoardDto {
 
     public String cdate;
     public String udate;
+
+    // 첨부파일 [ 스프링에서 지원하는 첨부파일 라이브러리 ]
+    private MultipartFile file;
 
 
 
