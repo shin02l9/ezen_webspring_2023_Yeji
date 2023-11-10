@@ -1,6 +1,6 @@
 package ezenweb.model.entity;
 
-import lombok.Builder;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,6 +8,12 @@ import java.util.List;
 
 @Entity
 @Table(name = "productCategory")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
+@Builder
 public class ProductCategoryEntity { // 제품 카테고리 테이블
 
     @Id
@@ -20,6 +26,11 @@ public class ProductCategoryEntity { // 제품 카테고리 테이블
     @Builder.Default
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "productCategory", cascade = CascadeType.ALL) // mappedBy 쓰는 이유 DB가 또 테이블을 생성하면 안되니까
     private List<ProductEntity> productEntities = new ArrayList<>();
+
+
+
+
+
 
 
     /*

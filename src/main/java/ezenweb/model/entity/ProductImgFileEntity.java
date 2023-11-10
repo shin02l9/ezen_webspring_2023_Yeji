@@ -1,11 +1,17 @@
 package ezenweb.model.entity;
 
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "productImg")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
+@Builder
 public class ProductImgFileEntity { // 파일 테이블
 
     @Id

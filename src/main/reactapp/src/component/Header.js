@@ -54,6 +54,7 @@ export default function Header( props ){
                 <li> <Link to='/'> TODO </Link> </li>
                 <li> <Link to='/'> 비회원게시판 </Link> </li>
                 <li> <Link to='/board/list'> 회원게시판 </Link> </li>
+                <li> <Link to='/admin/product'> 제품관리 </Link> </li>
                  { /* 상함 연산자 | 조건 ? 참 : 거짓 */}
 
 

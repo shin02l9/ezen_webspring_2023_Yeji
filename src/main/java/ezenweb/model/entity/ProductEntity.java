@@ -1,7 +1,6 @@
 package ezenweb.model.entity;
 
-import lombok.Builder;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -10,6 +9,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "product")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter @ToString
+@Builder
 public class ProductEntity { // 제품 테이블
 
     @Id
