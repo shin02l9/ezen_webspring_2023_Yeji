@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter @ToString
 @Builder
-public class ProductEntity { // 제품 테이블
+public class ProductEntity extends BaseTime{ // 제품 테이블
 
     @Id
     private String pno;             // 제품번호 [PK]

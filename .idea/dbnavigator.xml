@@ -51,9 +51,7 @@ commit;]]></console>
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="d206cc26-02d1-4208-902d-c9680fde9d8b" object-ref="consoles/SpringDB" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="d206cc26-02d1-4208-902d-c9680fde9d8b" dataset="springweb.member" active-filter-id="" />
