@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping( "/product" )
@@ -75,7 +77,18 @@ public class ProductController {
         return false;
     }
 
+    // ===================================차트데이터====================================================
+    // 5. 막대 차트
+    @GetMapping("/barChart")
+    public List<Map<Object,Object>> getBarChart(){
 
+        return productService.getBarChart();
+    }
 
+    // 6. 원형 차트
+    @GetMapping("/pieChart")
+    public List<Map<Object,Object>> getPieChart(){
 
+        return productService.getPieChart();
+    }
 }

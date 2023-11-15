@@ -7,6 +7,8 @@ import CategoryWrite from './CategoryWrite.js';
 
 export default function ProductWrite( props ){
 
+
+
     // 제품 등록하기
     const onProductAdd = (e) => {
         let productForm = document.querySelectorAll('.productForm')[0];
@@ -15,6 +17,7 @@ export default function ProductWrite( props ){
         axios.post( '/product/productPost', productFormData )
             .then( r => {
                 if( r.data ){
+
                     alert( '제품 등록 성공 ');
                     productForm.reset();
                 } else { alert ( '제품 등록 실패 ')}

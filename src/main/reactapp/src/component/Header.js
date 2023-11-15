@@ -4,42 +4,6 @@ import axios from 'axios';
 import { useState, useEffect, useRef } from 'react';
 export default function Header( props ){
 
-
-    let 변수 = 10;
-    변수++;
-    // 랜더링 후
-    console.log(변수);
-    let Ref변수 = useRef(10);
-    Ref변수++;
-    // 랜더링 후
-    console.log(Ref변수);
-
-    // 2. 소켓
-    // 웹 소켓 통신 ==================================================
-    //useEffect(()=>{
-        let 클라이언트소켓 = new WebSocket("ws://localhost:80/chat");
-        console.log(클라이언트소켓);
-
-        // 1. 서버소켓과 연동 성공했을때. 이후 행동/메소드 정의
-        클라이언트소켓.onopen = (e) => { console.log(e); };
-        // 2. 서버소켓과 세션 오류가 발생했을때. 이후 행동/메소드 정의
-        클라이언트소켓.onerror = (e) => { console.log(e); };
-        // 3. 서버소켓과 연동이 끊겼을때. 이후 행동/메소드 정의
-        클라이언트소켓.onclose = (e) => { console.log(e); };
-        // 4. 서버소켓으로부터 메세지를 받았을때. 이후 행동/메소드 정의
-        클라이언트소켓.onmessage = (e) => { console.log(e); };
-
-        // 5. 메세지 보내기
-        //클라이언트소켓.send('안녕')
-
-    //},[])
-
-    // 2. 클라이언트 소켓 메세지 전송
-    const msgSend = (e) => { 클라이언트소켓.send("안녕")}
-
-    // 웹 소켓 통신 end ==============================================
-
-
     // 1. 로그인 상태를 저장할 상태변수
     let [ login, setLogin ] = useState( null );
 
@@ -84,7 +48,6 @@ export default function Header( props ){
 
     return(<>
     <header className="headerBox">
-    <button type="bottom" onClick={ msgSend } > 전송 </button>
         <h2> Ezen React <span className="with">(with. yeji)</span></h2>
             <ul className="reactUL">
                 <li> <Link to='/example'> 리액트예제 </Link> </li>

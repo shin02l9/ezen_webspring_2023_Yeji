@@ -37,7 +37,50 @@ import BoardUpdate from './board/BoardUpdate.js';
 //product
 import ProductAdmin from './product/ProductAdmin';
 
+
+
+// 훅 라이브러리
+import { useState, useEffect, useRef } from 'react';
+/* MUI 라이브러리 호출 */
+import {  useSnackbar } from 'notistack'; // npm i notistack
+
+
 export default function Index( props ){
+    /* MUI 라이브러리 객체 호출  */
+    const { enqueueSnackbar } = useSnackbar();
+
+    // 웹 소켓 통신 ==================================================
+    //useEffect(()=>{
+        let 클라이언트소켓 = new WebSocket("ws://localhost:80/chat");
+        console.log(클라이언트소켓);
+
+        // 1. 서버소켓과 연동 성공했을때. 이후 행동/메소드 정의
+        클라이언트소켓.onopen = (e) => { console.log(e); };
+        // 2. 서버소켓과 세션 오류가 발생했을때. 이후 행동/메소드 정의
+        클라이언트소켓.onerror = (e) => { console.log(e); };
+        // 3. 서버소켓과 연동이 끊겼을때. 이후 행동/메소드 정의
+        클라이언트소켓.onclose = (e) => { console.log(e); };
+        // 4. 서버소켓으로부터 메세지를 받았을때. 이후 행동/메소드 정의
+        클라이언트소켓.onmessage = (e) => {
+            console.log(e);
+             enqueueSnackbar('This is a success message!', { variant : 'success' });
+        };
+
+        // 5. 메세지 보내기
+        //클라이언트소켓.send('안녕')
+
+    //},[])
+
+    // 2. 클라이언트 소켓 메세지 전송
+    const msgSend = (e) => { 클라이언트소켓.send("안녕")}
+
+    // 웹 소켓 통신 end ==============================================
+
+
+
+
+
+
     return(<>
     <BrowserRouter>
         <Header />

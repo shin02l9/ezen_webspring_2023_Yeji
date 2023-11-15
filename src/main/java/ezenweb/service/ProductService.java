@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -191,8 +189,21 @@ public class ProductService {
         return false;
     }
 
+    // 차트 =====================================================================
 
 
+    // 5. 막대 차트
+    @Transactional
+    public List<Map<Object,Object>> getBarChart(){
 
+        return productEntityRepository.findByBarChartData();
+    }
+
+    // 6. 원형 차트
+    @Transactional
+    public List<Map<Object,Object>> getPieChart(){
+
+        return productEntityRepository.findByPieChartData();
+    }
 
 }
